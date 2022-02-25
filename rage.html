@@ -212,17 +212,19 @@ rages.forEach(({name, legacyName, location, attack, legacyAttack}) => {
     }
     
     const attackCell = document.createElement('td');
-    const attackSpan = document.createElement('span');
-    attackSpan.innerText = attack;
-    attackCell.appendChild(attackSpan);
-    attackSpan.classList.add('modern');
-    if (!!legacyAttack) {
-        const legacyAttackSpan = document.createElement('span');
-        legacyAttackSpan.classList.add('legacy');
-        legacyAttackSpan.innerText = legacyAttack;
-        attackCell.appendChild(legacyAttackSpan);
-    } else {
-        attackSpan.classList.add('legacy');
+    if (!!attack) {
+        const attackSpan = document.createElement('span');
+        attackSpan.innerText = attack;
+        attackCell.appendChild(attackSpan);
+        attackSpan.classList.add('modern');
+        if (!!legacyAttack) {
+            const legacyAttackSpan = document.createElement('span');
+            legacyAttackSpan.classList.add('legacy');
+            legacyAttackSpan.innerText = legacyAttack;
+            attackCell.appendChild(legacyAttackSpan);
+        } else {
+            attackSpan.classList.add('legacy');
+        }
     }
 
     row.appendChild(nameCell);
