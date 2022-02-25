@@ -111,11 +111,64 @@ function getRecord(name) {
 }
 
 const rages = [
-    {name: 'Guard', missable: false, location: 'Narshe - raid', attack: 'Critical'},
-    {name: 'Silver Lobo', legacyName: 'Lobo', missable: false, location: 'Narshe - raid', attack: 'Chomp', legacyAttack: 'Tusk'},
+    {name: 'Guard', location: 'Narshe - raid', attack: 'Critical'},
+    {name: 'Silver Lobo', legacyName: 'Lobo', location: 'Narshe - raid', attack: 'Chomp', legacyAttack: 'Tusk'},
+    {name: 'Megalodoth', legacyName: 'Vomammoth', location: 'Narshe - raid', attack: 'Snowstorm', legacyAttack: 'Blizzard'},
+    {name: 'Wererat', legacyName: 'Were-Rat', location: 'Narshe Mines', attack: 'Poison'},
+    {name: 'Spritzer', legacyName: 'Vaporite', location: 'Narshe Mines', attack: 'Blaze'},
+    {name: 'Bandit', legacyName: 'Repo Man', location: 'Narshe Mines', attack: 'Self-Destruct', legacyAttack: 'Exploder'},
+    {name: 'Leaf Bunny', legacyName: 'Leafer', location: 'Near Narshe', attack: 'Incisors', legacyAttack: 'Incisor'},
+    {name: 'Darkwind', legacyName: 'Dark Wind', location: 'Near Narshe', attack: 'Break'},
+    {name: 'Sand Ray', location: 'Near Figaro', attack: 'Tail'},
+    {name: 'Alacran', legacyName: 'Areneid', location: 'Near Figaro', attack: 'Numb'},
+    {name: 'Foper', legacyName: 'Bleary', location: 'South Figaro Cave (first visit)', attack: 'Death', legacyAttack: 'Doom'},
+    {name: 'Hornet', location: 'South Figaro Cave (first visit)', attack: 'Iron Stinger', legacyAttack: 'IronNeedle'},
+    {name: 'Urok', legacyName: 'Crawly', location: 'South Figaro Cave (first visit)', attack: 'Digestive Fluid', legacyAttack: 'Heart Burn'},
+    {name: 'Belmodar', legacyName: 'Rhinotaur', location: 'Near South Figaro', attack: 'Megavolt', legacyAttack: 'Mega Volt'},
+    {name: 'Unseelie', legacyName: 'GreaseMonk', location: 'Near South Figaro', attack: 'Shell'},
+    {name: 'Mu', legacyName: 'Rhodox', location: 'Near South Figaro', attack: 'Snare'},
+    {name: 'Zaghrem', legacyName: 'Brawler', location: 'Mt. Kolts', attack: 'Stone'},
+    {name: 'Trillium', legacyName: 'Trilium', location: 'Mt. Kolts', attack: 'Bio'},
+    {name: 'Gorgias', legacyName: 'Tusker', location: 'Mt. Kolts', attack: 'Snowstorm', legacyAttack: 'Blizzard'},
+    {name: 'Cirpius', location: 'Mt. Kolts', attack: 'Hastega', legacyAttack: 'Haste2'},
+    {name: 'Lesser Lopros', legacyName: 'Pterodon', location: 'Lethe River', attack: 'Fireball', legacyAttack: 'Fire Ball'},
+    {name: 'Nautiloid', location: 'Lethe River', attack: 'Ink'},
+    {name: 'Exocite', location: 'Lethe River', attack: 'Pincer', legacyAttack: 'Scissors'},
+    {name: 'Heavy Armor', legacyName: 'HeavyArmor', location: 'Narshe Cliffs', attack: 'Magitek Laser', legacyName: 'Tek Laser'},
+    {name: 'Commander', location: 'South Figaro', attack: 'Break'},
+    {name: 'Vector Hound', legacyName: 'Vector Pup', location: 'South Figaro', attack: 'Bite'},
+    {name: 'Cartagra', legacyName: 'Trilobiter', location: 'South Figaro Cave (second visit)', attack: 'Poison Barb', legacyAttack: 'PoisonBarb'},
+    {name: 'Acrophies', legacyName: 'Primordite', location: 'South Figaro Cave (second visit)', attack: 'Numbclaw', legacyAttack: 'Numblade'},
+    {name: 'Gold Bear', location: 'South Figaro Cave (second visit)', attack: 'Gouge'},
+    {name: 'Valeor', legacyName: '1st Class', location: 'Narshe Mines (second visit)', attack: 'Stone'},
+    {name: 'Wild Rat', location: 'Narshe Mines (second visit)', attack: 'Scratch'},
+    {name: 'Stray Cat', location: '', attack: 'Cat Scratch', legacyAttack: 'Catscratch'},
+    {name: 'Aepyornis', legacyName: 'Beakor', location: '', attack: 'Featherdust'},
+    {name: 'Nettlehopper', legacyName: 'CrassHoppr', location: '', attack: 'Berserk', legacyAttack: 'X-Zone'},
+    {name: 'Chippirabbit', legacyName: 'Rhobite', location: '', attack: 'Raise', legacyAttack: 'Life'},
+    {name: 'Captain', legacyName: 'Leader', location: 'Doma Castle'},
+    {name: 'Imperial Soldier', legacyName: 'Soldier', location: 'Doma Castle', attack: 'Fire'},
+    {name: 'Templar', location: 'Imperial Camp', attack: 'Fira', legacyAttack: 'Fire 2'},
+    {name: 'Satellite', legacyName: 'Telstar', location: 'Imperial Camp', attack: 'Sonic Boom'},
+    {name: 'Ghost', location: 'Phantom Forest', attack: 'Thundara', legacyAttack: 'Bolt 2'},
+    {name: 'Poplium', location: 'Phantom Forest', attack: 'Cling'},
+    {name: 'Cloud', legacyName: 'Hazer', location: 'Phantom Train', attack: 'Thundara', legacyAttack: 'Bolt 2'},
+    {name: 'Angel Whisper', legacyName: 'Whisper', location: 'Phantom Train', attack: 'Gravity', legacyAttack: 'Demi'},
+    {name: 'Oversoul', legacyName: 'Over-Mind', location: 'Phantom Train', attack: 'Will o\' the Wisp', legacyAttack: 'Elf Fire'},
+    {name: 'Bomb', location: '', attack: 'Blaze'},
+    {name: 'Living Dead', legacyName: 'StillGoing', location: 'Phantom Train', attack: 'Osmose'},
+    {name: 'Apparition', legacyName: 'Specter', location: 'Phantom Train'},
+    {name: 'Siegfried', location: 'Phantom Train'},
+    {name: 'Opinicus Fish', legacyName: 'Piranha', location: 'Baren Falls'},
+    {name: 'Anguiform', location: 'Serpent Trench', attack: 'Aqua Breah', legacyAttack: 'Aqua Rake'},
+    {name: 'Aspiran', legacyName: 'Aspik', location: 'Serpent Trench', attack: 'Gigavolt', legacyAttack: 'Giga Volt'},
+    {name: 'Actinian', legacyName: 'Actaneon', location: 'Serpent Trench', attack: 'Clamp'},
+    {name: 'Fidor', location: 'Narshe Cliffs', attack: 'Pounce'},
+    {name: 'Corporal', legacyName: 'Trooper', location: 'Narshe Cliffs', attack: 'Swing'},
+    {name: 'Hunting Hound', legacyName: 'Bounty Man', location: 'Narshe Cliffs', attack: 'Bite'},
 ];
 
-rages.forEach(({name, legacyName, missable, location, attack, legacyAttack}) => {
+rages.forEach(({name, legacyName, location, attack, legacyAttack}) => {
     const {defeated, learned} = getRecord(name);
 
     const row = document.createElement('tr');
@@ -137,10 +190,6 @@ rages.forEach(({name, legacyName, missable, location, attack, legacyAttack}) => 
 
     const locationCell = document.createElement('td');
     locationCell.innerText = location;
-    if (missable) {
-        // TODO: investigate nuances surrounding missable encounters
-        locationCell.classList.add('missable');
-    }
 
     const defeatedCell = document.createElement('td');
     const defeatedCheckbox = document.createElement('input');
@@ -152,13 +201,15 @@ rages.forEach(({name, legacyName, missable, location, attack, legacyAttack}) => 
     defeatedCell.appendChild(defeatedCheckbox);
 
     const learnedCell = document.createElement('td');
-    const learnedCheckbox = document.createElement('input');
-    learnedCheckbox.setAttribute('type', 'checkbox');
-    learnedCheckbox.checked = learned;
-    learnedCheckbox.addEventListener('change', (event) => {
-        updateRecord(name, 'learned', event.target.checked);
-    });
-    learnedCell.appendChild(learnedCheckbox);
+    if (!!attack) {
+        const learnedCheckbox = document.createElement('input');
+        learnedCheckbox.setAttribute('type', 'checkbox');
+        learnedCheckbox.checked = learned;
+        learnedCheckbox.addEventListener('change', (event) => {
+            updateRecord(name, 'learned', event.target.checked);
+        });
+        learnedCell.appendChild(learnedCheckbox);
+    }
     
     const attackCell = document.createElement('td');
     const attackSpan = document.createElement('span');
