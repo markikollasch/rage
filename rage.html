@@ -60,6 +60,7 @@
 document.body.onload = function() {
 
 const tableBody = document.getElementById('rages').tBodies.item(0);
+const prefix = 'rage_'
 
 function updateRow(name, defeated, learned) {
     const matchedRow = tableBody.querySelector(`tr[data-name="${name}"]`);
@@ -72,13 +73,24 @@ function updateRow(name, defeated, learned) {
     learnedCheckbox.checked = learned;
 }
 
+window.addEventListener('storage', (event) => {
+    const key = event.key
+    if (!key.startsWith(prefix)) {
+        return;
+    }
+
+    const name = key.slice(prefix.length);
+    const {defeated, learned} = JSON.parse(event.newValue);
+    updateRow(name, defeated, learned);
+});
+
 const defaultRecord = Object.freeze({
     defeated: false,
     learned: false,
 });
 
 function updateRecord(name, property, value) {
-    const existingRecordString = window.localStorage.getItem(name);
+    const existingRecordString = window.localStorage.getItem(prefix + name);
     let newRecord;
     if (!existingRecordString) {
         newRecord = {...defaultRecord};
@@ -86,11 +98,11 @@ function updateRecord(name, property, value) {
         newRecord = JSON.parse(existingRecordString);
     }
     newRecord[property] = value;
-    window.localStorage.setItem(name, JSON.stringify(newRecord));
+    window.localStorage.setItem(prefix + name, JSON.stringify(newRecord));
 }
 
 function getRecord(name) {
-    const record = window.localStorage.getItem(name);
+    const record = window.localStorage.getItem(prefix + name);
     if (!record) {
         return {...defaultRecord};
     } else {
