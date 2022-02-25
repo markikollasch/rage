@@ -16,6 +16,26 @@
     display: none;
 }
 
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-color: #e4f1fe;
+        --fg-color: #2b2b2b;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #2b2b2b;
+        --fg-color: #e4f1fe;
+    }
+}
+
+:root {
+    background-color: var(--bg-color);
+    color: var(--fg-color);
+    font-family: sans-serif;
+}
+
 [role=img][aria-label] {
     position: relative;
 }
@@ -29,9 +49,22 @@
     content: attr(aria-label);
     bottom: 1.5em;
     left: -50%;
+    background-color: var(--bg-color);
 }
 
-/* TODO: Make this pretty */
+table {
+    border-collapse: collapse;
+}
+td {
+    border-top: 2px solid var(--fg-color);
+}
+td.name {
+    font-weight: bold;
+}
+td.location {
+    font-size: small;
+    max-width: 9em;
+}
 </style>
 </head>
 <body>
@@ -175,6 +208,7 @@ rages.forEach(({name, legacyName, location, attack, legacyAttack}) => {
     row.setAttribute('data-name', name);
     
     const nameCell = document.createElement('td');
+    nameCell.classList.add('name');
     const nameSpan = document.createElement('span');
     nameSpan.innerText = name;
     nameCell.appendChild(nameSpan);
@@ -189,6 +223,7 @@ rages.forEach(({name, legacyName, location, attack, legacyAttack}) => {
     }
 
     const locationCell = document.createElement('td');
+    locationCell.classList.add('location');
     locationCell.innerText = location;
 
     const defeatedCell = document.createElement('td');
@@ -212,6 +247,7 @@ rages.forEach(({name, legacyName, location, attack, legacyAttack}) => {
     }
     
     const attackCell = document.createElement('td');
+    attackCell.classList.add('attack');
     if (!!attack) {
         const attackSpan = document.createElement('span');
         attackSpan.innerText = attack;
