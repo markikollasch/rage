@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<meta name="color-scheme" content="dark light">
+<title>Final Fantasy VI Rage Checklist</title>
+<style>
+.legacy:not(.modern) {
+    display: none;
+}
+.show-legacy .legacy {
+    display: inline;
+}
+.show-legacy .modern:not(.legacy) {
+    display: none;
+}
+
+[role=img][aria-label] {
+    position: relative;
+}
+[role=img][aria-label]:focus::after,
+[role=img][aria-label]:hover::after {
+    font-weight: normal;
+    font-size: small;
+    position: absolute;
+    display: block;
+    z-index: 1;
+    content: attr(aria-label);
+    bottom: 1.5em;
+    left: -50%;
+}
+
+/* TODO: Make this pretty */
+</style>
+</head>
+<body>
+<h1>Final Fantasy VI rage checklist</h1>
+
+<noscript>JavaScript is required to use this checklist.</noscript>
+
+<label>
+    <input type="checkbox" id="show-legacy">
+    Use SNES names
+</label>
+
+<table id='rages'>
+    <caption>Rages</caption>
+    <thead>
+        <th>Enemy</th>
+        <th>Location</th>
+        <th><span role='img' aria-label='Defeated it?' tabindex='0'>☠</span></th>
+        <th><span role='img' aria-label='Learned its Rage?' tabindex='0'>🔍</span></th>
+        <th>Attack(s)</th>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+document.body.onload = function() {
+
+const tableBody = document.getElementById('rages').tBodies.item(0);
+
+function updateRow(name, defeated, learned) {
+    const matchedRow = tableBody.querySelector(`tr[data-name="${name}"]`);
+    if (!matchedRow) {
+        return;
+    }
+
+    const [defeatedCheckbox, learnedCheckbox] = matchedRow.querySelectorAll('input');
+    defeatedCheckbox.checked = defeated;
+    learnedCheckbox.checked = learned;
+}
+
+const defaultRecord = Object.freeze({
+    defeated: false,
+    learned: false,
+});
+
+function updateRecord(name, property, value) {
+    const existingRecordString = window.localStorage.getItem(name);
+    let newRecord;
+    if (!existingRecordString) {
+        newRecord = {...defaultRecord};
+    } else {
+        newRecord = JSON.parse(existingRecordString);
+    }
+    newRecord[property] = value;
+    window.localStorage.setItem(name, JSON.stringify(newRecord));
+}
+
+function getRecord(name) {
+    const record = window.localStorage.getItem(name);
+    if (!record) {
+        return {...defaultRecord};
+    } else {
+        return JSON.parse(record);
+    }
+}
+
+const rages = [
+    {name: 'Guard', missable: false, location: 'Narshe - raid', attack: 'Critical'},
+    {name: 'Silver Lobo', legacyName: 'Lobo', missable: false, location: 'Narshe - raid', attack: 'Chomp', legacyAttack: 'Tusk'},
+];
+
+rages.forEach(({name, legacyName, missable, location, attack, legacyAttack}) => {
+    const {defeated, learned} = getRecord(name);
+
+    const row = document.createElement('tr');
+    row.setAttribute('data-name', name);
+    
+    const nameCell = document.createElement('td');
+    const nameSpan = document.createElement('span');
+    nameSpan.innerText = name;
+    nameCell.appendChild(nameSpan);
+    nameSpan.classList.add('modern');
+    if (!!legacyName) {
+        const legacyNameSpan = document.createElement('span');
+        legacyNameSpan.classList.add('legacy');
+        legacyNameSpan.innerText = legacyName;
+        nameCell.appendChild(legacyNameSpan);
+    } else {
+        nameSpan.classList.add('legacy');
+    }
+
+    const locationCell = document.createElement('td');
+    locationCell.innerText = location;
+    if (missable) {
+        // TODO: investigate nuances surrounding missable encounters
+        locationCell.classList.add('missable');
+    }
+
+    const defeatedCell = document.createElement('td');
+    const defeatedCheckbox = document.createElement('input');
+    defeatedCheckbox.setAttribute('type', 'checkbox');
+    defeatedCheckbox.checked = defeated;
+    defeatedCheckbox.addEventListener('change', (event) => {
+        updateRecord(name, 'defeated', event.target.checked);
+    });
+    defeatedCell.appendChild(defeatedCheckbox);
+
+    const learnedCell = document.createElement('td');
+    const learnedCheckbox = document.createElement('input');
+    learnedCheckbox.setAttribute('type', 'checkbox');
+    learnedCheckbox.checked = learned;
+    learnedCheckbox.addEventListener('change', (event) => {
+        updateRecord(name, 'learned', event.target.checked);
+    });
+    learnedCell.appendChild(learnedCheckbox);
+    
+    const attackCell = document.createElement('td');
+    const attackSpan = document.createElement('span');
+    attackSpan.innerText = attack;
+    attackCell.appendChild(attackSpan);
+    attackSpan.classList.add('modern');
+    if (!!legacyAttack) {
+        const legacyAttackSpan = document.createElement('span');
+        legacyAttackSpan.classList.add('legacy');
+        legacyAttackSpan.innerText = legacyAttack;
+        attackCell.appendChild(legacyAttackSpan);
+    } else {
+        attackSpan.classList.add('legacy');
+    }
+
+    row.appendChild(nameCell);
+    row.appendChild(locationCell);
+    row.appendChild(defeatedCell);
+    row.appendChild(learnedCell);
+    row.appendChild(attackCell);
+
+    tableBody.appendChild(row);
+});
+
+document.getElementById('show-legacy').addEventListener('change', (event) => {
+    const table = document.getElementById('rages');
+    if (event.target.checked) {
+        table.classList.add('show-legacy');
+    } else {
+        table.classList.remove('show-legacy');
+    }
+});
+};
+</script>
+</body>
+</html>
